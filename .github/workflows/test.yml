@@ -20,7 +20,7 @@ jobs:
               yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
               
           - name: Import secrets
-            uses: mimbol22/yandex-lockbox@latest
+            uses: mimbol22/yandex-lockbox@v1
             with:
               iam_token: ${{ steps.issue-iam-token.outputs.iam-token }}
               folder_id: ${{ secrets.YC_FOLDER_ID }}
