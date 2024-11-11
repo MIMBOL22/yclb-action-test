@@ -1,0 +1,33 @@
+name: Test
+on:
+    push:
+    pull_request:
+
+# jobs запускаются параллельно, если не указана последовательность
+jobs:
+    my_build_job:
+      # Операционная система в виртуальной машине, в которой запускаются процессы
+      runs-on: ubuntu-latest
+        # Шаги
+      steps:
+          # Actions от github: проверяет репозиторий, гит и т.д.
+          - uses: actions/checkout@v3
+
+          - name: Create IAM token
+            uses: bigtows/yc-token@latest
+            id: generation-iam-token
+            with:
+              service-account-token: ${{ secrets.SERVICE_ACCOUNT_TOKEN }}
+              type-token: iam
+              
+          - name: Import secrets
+            uses: mimbol22/yandex-lockbox@latest
+            with:
+              iam_token: ${{ steps.generation-iam-token.outputs.iam-token }}
+              folder_id: ${{ secrets.YC_FOLDER_ID }}
+              secret_prefix: DEV_
+              is_clean_prefix: false
+              
+          - name: Echo test secret
+            run: |
+              echo "$LOCKBOX_DEV_SUPER_SECRET_KEY" | base64 --decode
