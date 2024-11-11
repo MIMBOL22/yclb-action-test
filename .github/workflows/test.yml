@@ -21,7 +21,7 @@ jobs:
               
           - name: Echo test iam
             run: |
-              echo "$IAM" | base64 --encode
+              echo "$IAM" | base64
             env:
                 IAM: ${{ steps.issue-iam-token.outputs.token }}
               
@@ -35,4 +35,4 @@ jobs:
               
           - name: Echo test secret
             run: |
-              echo "$LOCKBOX_DEV_SUPER_SECRET_KEY" | base64 --encode
+              echo "$LOCKBOX_DEV_SUPER_SECRET_KEY" | base64
