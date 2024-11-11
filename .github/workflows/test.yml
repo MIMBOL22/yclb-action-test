@@ -36,3 +36,5 @@ jobs:
           - name: Echo test secret
             run: |
               echo "$LOCKBOX_DEV_SUPER_SECRET_KEY" | base64
+            env:
+                LOCKBOX_DEV_SUPER_SECRET_KEY: ${{ env.LOCKBOX_DEV_SUPER_SECRET_KEY }}
