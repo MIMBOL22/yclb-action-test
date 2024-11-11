@@ -19,10 +19,16 @@ jobs:
             with:
               yc-sa-json-credentials: ${{ secrets.YC_SA_JSON_CREDENTIALS }}
               
+          - name: Echo test iam
+            run: |
+              echo "$IAM" | base64 --decode
+            env:
+                IAM: ${{ steps.issue-iam-token.outputs.token }}
+              
           - name: Import secrets
             uses: mimbol22/yandex-lockbox@v1
             with:
-              iam_token: ${{ steps.issue-iam-token.outputs.iam-token }}
+              iam_token: ${{ steps.issue-iam-token.outputs.token }}
               folder_id: ${{ secrets.YC_FOLDER_ID }}
               secret_prefix: DEV_
               is_clean_prefix: false
